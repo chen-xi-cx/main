@@ -11,6 +11,7 @@ import seedu.address.logic.Logic;
 import seedu.address.model.YearMonth;
 import seedu.address.model.bio.User;
 import seedu.address.ui.bio.BioPane;
+import seedu.address.ui.statistics.AverageGraphPane;
 
 /**
  * A class containing enumerations, storing the possible Main Display Panes to be displayed to the user.
