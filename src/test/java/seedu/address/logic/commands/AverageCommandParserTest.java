@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.parser.AverageCommandParser;
 import seedu.address.model.record.RecordType;
 import seedu.address.model.statistics.AverageType;
+import seedu.address.model.statistics.RecordContainsRecordTypePredicate;
 
 public class AverageCommandParserTest {
     private AverageCommandParser parser = new AverageCommandParser();
@@ -17,11 +18,14 @@ public class AverageCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         assertParseSuccess(parser, " a/DAILY rt/BLOODSUGAR n/8",
-            new AverageCommand(AverageType.DAILY, RecordType.BLOODSUGAR, 8));
+                new AverageCommand(new RecordContainsRecordTypePredicate(RecordType.BLOODSUGAR),
+                AverageType.DAILY, RecordType.BLOODSUGAR, 8));
         assertParseSuccess(parser, " a/weekly rt/BLOODSUGAR n/3",
-            new AverageCommand(AverageType.WEEKLY, RecordType.BLOODSUGAR, 3));
+                new AverageCommand(new RecordContainsRecordTypePredicate(RecordType.BLOODSUGAR),
+                AverageType.WEEKLY, RecordType.BLOODSUGAR, 3));
         assertParseSuccess(parser, " a/MONTHLY rt/BLOODSUGAR n/1",
-            new AverageCommand(AverageType.MONTHLY, RecordType.BLOODSUGAR, 1));
+                new AverageCommand(new RecordContainsRecordTypePredicate(RecordType.BLOODSUGAR),
+                AverageType.MONTHLY, RecordType.BLOODSUGAR, 1));
     }
 
     @Test
@@ -29,11 +33,14 @@ public class AverageCommandParserTest {
 
         // missing count prefix
         assertParseSuccess(parser, " a/DAILY rt/BLOODSUGAR",
-            new AverageCommand(AverageType.DAILY, RecordType.BLOODSUGAR, 5));
+                new AverageCommand(new RecordContainsRecordTypePredicate(RecordType.BLOODSUGAR),
+                AverageType.DAILY, RecordType.BLOODSUGAR, 5));
         assertParseSuccess(parser, " a/weekly rt/BLOODSUGAR",
-            new AverageCommand(AverageType.WEEKLY, RecordType.BLOODSUGAR, 5));
+                new AverageCommand(new RecordContainsRecordTypePredicate(RecordType.BLOODSUGAR),
+                AverageType.WEEKLY, RecordType.BLOODSUGAR, 5));
         assertParseSuccess(parser, " a/MONTHLY rt/BLOODSUGAR",
-            new AverageCommand(AverageType.MONTHLY, RecordType.BLOODSUGAR, 5));
+                new AverageCommand(new RecordContainsRecordTypePredicate(RecordType.BLOODSUGAR),
+                AverageType.MONTHLY, RecordType.BLOODSUGAR, 5));
     }
 
     @Test

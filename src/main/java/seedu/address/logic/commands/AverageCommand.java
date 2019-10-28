@@ -6,6 +6,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.record.RecordType;
 import seedu.address.model.statistics.AverageType;
+import seedu.address.model.statistics.RecordContainsRecordTypePredicate;
 import seedu.address.ui.DisplayPaneType;
 
 /**
@@ -32,20 +33,25 @@ public class AverageCommand extends Command {
 
     private final RecordType recordType;
 
+    private final RecordContainsRecordTypePredicate recordContainsRecordTypePredicate;
+
     private final int count;
 
-    public AverageCommand(AverageType averageType, RecordType recordType, int count) {
+    public AverageCommand(RecordContainsRecordTypePredicate recordContainsRecordTypePredicate,
+            AverageType averageType, RecordType recordType, int count) {
         requireNonNull(averageType);
         requireNonNull(recordType);
         this.averageType = averageType;
         this.recordType = recordType;
         this.count = count;
+        this.recordContainsRecordTypePredicate = recordContainsRecordTypePredicate;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        model.updateFilteredRecordList(recordContainsRecordTypePredicate);
         model.calculateAverageMap(averageType, recordType, count);
 
         if (model.getAverageMap().isEmpty()) {
@@ -66,6 +72,7 @@ public class AverageCommand extends Command {
             || (other instanceof AverageCommand // instanceof handles nulls
             && averageType.equals(((AverageCommand) other).averageType) // state check
             && recordType.equals(((AverageCommand) other).recordType)
-            && count == ((AverageCommand) other).count);
+            && count == ((AverageCommand) other).count)
+            && recordContainsRecordTypePredicate.equals(((AverageCommand) other).recordContainsRecordTypePredicate);
     }
 }
